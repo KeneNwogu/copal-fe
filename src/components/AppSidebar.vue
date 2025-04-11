@@ -15,39 +15,39 @@ import {
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
     title: "Add Reference",
-    url: "#",
+    url: "/references",
     icon: Plus,
   },
+  // {
+  //   title: "New Drawing",
+  //   url: "#",
+  //   icon: Plus,
+  // },
   {
-    title: "New Drawing",
-    url: "#",
-    icon: Plus,
-  },
-  {
-    title: "Drawing Streaks",
-    url: "#",
+    title: "Streaks",
+    url: "/streaks",
     icon: LineChart,
   },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
+  // {
+  //   title: "Calendar",
+  //   url: "#",
+  //   icon: Calendar,
+  // },
+  // {
+  //   title: "Search",
+  //   url: "#",
+  //   icon: Search,
+  // },
+  // {
+  //   title: "Settings",
+  //   url: "#",
+  //   icon: Settings,
+  // },
 ];
 </script>
 

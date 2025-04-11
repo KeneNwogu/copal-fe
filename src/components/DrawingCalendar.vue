@@ -1,7 +1,15 @@
 <template>
     <div class="w-full">
       <div class="flex justify-between items-center mb-4">
-        <button @click="prevMonth" class="text-sm text-gray-500 hover:text-black">
+        <button @click="prevMonth" 
+          class="text-sm text-gray-500 hover:text-black"
+          :disabled="isPrevBtnDisabled"
+          :class="{ 'opacity-0': isPrevBtnDisabled }"
+          :style="{
+            cursor: isPrevBtnDisabled ? 'none' : 'pointer',
+            pointerEvents: isPrevBtnDisabled ? 'none' : 'auto',
+          }"
+        >
           ← Previous
         </button>
         <h3 class="text-lg font-semibold">
@@ -19,7 +27,7 @@
       <div class="grid grid-cols-7 gap-1">
         <div v-for="blank in leadingEmptyDays" :key="'blank-' + blank" class="h-14"></div>
   
-        <div
+        <button
           v-for="day in daysInMonth"
           :key="day"
           class="h-14 rounded-lg flex items-center justify-center cursor-default transition-all"
@@ -27,10 +35,10 @@
             'bg-indigo-500 text-white': isDrawingDay(day),
             'hover:bg-indigo-100': !isDrawingDay(day),
           }"
-          :aria-disabled="!isDrawingDay(day)"
+          :disabled="!isDrawingDay(day)"
         >
           {{ day }}
-        </div>
+        </button>
       </div>
     </div>
   </template>
@@ -76,6 +84,19 @@
     const iso = date.toISOString().slice(0, 10)
     return drawingSet.value.has(iso)
   }
+
+  const sortedDrawings = computed(() => {
+    return props.drawings.sort((a, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    })
+  })
+
+  // previous button is disabled for the earliest month
+  const isPrevBtnDisabled = computed(() => {
+    let earliestMonth = sortedDrawings.value[0]?.createdAt || today;
+    earliestMonth = new Date(earliestMonth);
+    return earliestMonth.getMonth() === currentMonth.value && earliestMonth.getFullYear() === currentYear.value;
+  })
   
   const nextMonth = () => {
     if (currentMonth.value === 11) {

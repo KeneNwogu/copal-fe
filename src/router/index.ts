@@ -3,6 +3,7 @@ import DrawingOverview from '@/components/drawings/DrawingOverview.vue'
 import ReferenceOverview from '@/components/references/ReferenceOverview.vue'
 import HomeView from '@/views/HomeView.vue';
 import StreaksViews from '@/views/StreaksViews.vue';
+import CreateReferenceView from '@/views/references/CreateReferenceView.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -19,7 +20,7 @@ const router = createRouter({
     {
       path: '/references',
       name: 'references',
-      component: ReferenceOverview
+      component: CreateReferenceView
     }
   ]
 })
