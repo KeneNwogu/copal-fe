@@ -3,40 +3,14 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar.vue";
 
-import { ref } from "vue";
 import {
   BookOpenIcon,
-  GalleryHorizontalEndIcon,
-  PlusIcon,
-  FileIcon,
-  SearchIcon,
-  ImageIcon,
-  LightbulbIcon,
+  GalleryHorizontalEndIcon
 } from "lucide-vue-next";
 
 // Import shadcn components
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Progress } from "@/components/ui/progress";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   DropdownMenu,
   DropdownMenuContent,

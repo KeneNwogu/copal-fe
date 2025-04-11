@@ -173,9 +173,7 @@
   
   <script setup lang="ts">
   import { ref } from 'vue';
-  import { 
-    BookOpenIcon, 
-    GalleryHorizontalEndIcon, 
+  import {
     PlusIcon, 
     FileIcon, 
     SearchIcon, 
@@ -185,7 +183,6 @@
   
   // Import shadcn components
   import { Button } from '@/components/ui/button';
-  import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
   import { 
     Card, 
     CardHeader, 
@@ -211,15 +208,7 @@
     TabsTrigger, 
     TabsContent 
   } from '@/components/ui/tabs';
-  import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-  } from '@/components/ui/dropdown-menu';
-  
+
   // Mock data
   const ShufficonIcon = ImageIcon; // Placeholder for shuffle icon
   const ArtistIcon = ImageIcon; // Placeholder for artist icon

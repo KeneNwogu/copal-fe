@@ -5,8 +5,8 @@ import DrawingOverview from "@/components/drawings/DrawingOverview.vue";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const totalReferences = 10;
-const lastUploaded = "2021-01-01";
+// const totalReferences = 10;
+// const lastUploaded = "2021-01-01";
 </script>
 
 <template>

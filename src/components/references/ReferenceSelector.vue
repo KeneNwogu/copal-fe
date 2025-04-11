@@ -1,3 +1,27 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import type { Reference } from '@/types'
+
+const props = defineProps<{
+  references: Reference[]
+  selectedReference: Reference | null
+}>()
+
+const emit = defineEmits<{
+  (e: 'update:selectedReference', value: Reference | null): void
+}>()
+
+// Use internal ID for binding since objects can't be v-modeled in a select
+const internalSelectedId = computed({
+  get: () => props.selectedReference?.id ?? '',
+  set: (id: string) => {
+    const selected = props.references.find(ref => ref.id === id) || null
+    emit('update:selectedReference', selected)
+  }
+})
+</script>
+
+
 <template>
     <div class="w-full max-w-md">
       <label for="reference" class="block text-sm font-medium text-gray-700 mb-1">
@@ -16,26 +40,4 @@
     </div>
   </template>
   
-  <script setup lang="ts">
-  import { computed, watch } from 'vue'
-  import type { Reference } from '@/types'
-  
-  const props = defineProps<{
-    references: Reference[]
-    selectedReference: Reference | null
-  }>()
-  
-  const emit = defineEmits<{
-    (e: 'update:selectedReference', value: Reference | null): void
-  }>()
-  
-  // Use internal ID for binding since objects can't be v-modeled in a select
-  const internalSelectedId = computed({
-    get: () => props.selectedReference?.id ?? '',
-    set: (id: string) => {
-      const selected = props.references.find(ref => ref.id === id) || null
-      emit('update:selectedReference', selected)
-    }
-  })
-  </script>
-  
+ 

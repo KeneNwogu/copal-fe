@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import type { Drawing, Reference } from "@/types";
+import type { Reference } from "@/types";
 import ReferenceSelector from "@/components/references/ReferenceSelector.vue";
 import ProgressOverview from "@/components/ProgressOverview.vue";
 import DrawingCalendar from "@/components/DrawingCalendar.vue";

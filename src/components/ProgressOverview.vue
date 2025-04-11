@@ -51,7 +51,7 @@
   
   // Get last drawing date
   const lastDateDisplay = computed(() => {
-    const last = drawingDates.value.at(-1)
+    const last = drawingDates.value[drawingDates.value.length - 1];
     return last ? new Date(last).toDateString() : null
   })
   

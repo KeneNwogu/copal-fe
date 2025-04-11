@@ -1,3 +1,24 @@
+<script setup lang="ts">
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-vue-next";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+const totalReferences = 10;
+const lastUploaded = "2021-01-01";
+
+const openReferenceDialog = () => {
+  console.log("Open reference dialog");
+};
+</script>
+
 <template>
   <Card class="w-full max-w-sm">
     <CardHeader>
@@ -22,21 +43,3 @@
     </CardFooter>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-vue-next';
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-const totalReferences = 10;
-const lastUploaded = "2021-01-01";
-
-</script>

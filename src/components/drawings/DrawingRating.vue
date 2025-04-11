@@ -84,7 +84,7 @@
       ]
     },
     recommendedCourses: {
-      type: Array,
+      type: Array<{title: string, duration: string, level: string, category: string}>,
       default: () => [
         {
           title: "Fundamentals of Drawing Proportions",

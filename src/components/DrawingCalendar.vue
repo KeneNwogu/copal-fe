@@ -45,7 +45,7 @@
   
   <script setup lang="ts">
   import { computed, ref } from 'vue'
-  import { Drawing } from '@/types'
+  import type { Drawing } from '@/types'
   
   const props = defineProps<{
     drawings: Drawing[]
