@@ -2,8 +2,9 @@
     <div class="bg-white rounded-xl shadow p-4 w-full">
       <div class="flex items-center justify-between mb-3">
         <h2 class="text-lg font-semibold">
-          Progress for "{{ reference.title }}"
+          Progress for "{{ reference.name }}"
         </h2>
+
         <span class="text-sm text-gray-500">
           Last drawn: {{ lastDateDisplay || 'Never' }}
         </span>
@@ -11,7 +12,7 @@
   
       <div class="mb-2 text-sm">
         <span class="font-medium">{{ completed }}</span> of 
-        <span class="font-medium">{{ reference.iterationTarget }}</span> drawings completed
+        <span class="font-medium">{{ reference.iterations }}</span> drawings completed
       </div>
   
       <div class="relative h-3 w-full bg-gray-200 rounded-full overflow-hidden mb-3">

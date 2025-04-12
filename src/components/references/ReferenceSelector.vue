@@ -13,9 +13,9 @@ const emit = defineEmits<{
 
 // Use internal ID for binding since objects can't be v-modeled in a select
 const internalSelectedId = computed({
-  get: () => props.selectedReference?.id ?? '',
+  get: () => props.selectedReference?._id ?? '',
   set: (id: string) => {
-    const selected = props.references.find(ref => ref.id === id) || null
+    const selected = props.references.find(ref => ref._id === id) || null
     emit('update:selectedReference', selected)
   }
 })
@@ -33,8 +33,8 @@ const internalSelectedId = computed({
         v-model="internalSelectedId"
       >
         <option disabled value="">-- Choose a reference --</option>
-        <option v-for="ref in references" :key="ref.id" :value="ref.id">
-          {{ ref.title }}
+        <option v-for="ref in references" :key="ref._id" :value="ref._id">
+          {{ ref.name }}
         </option>
       </select>
     </div>
