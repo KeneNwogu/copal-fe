@@ -11,7 +11,7 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate);
 
 app.use(pinia)
-setupInterceptors();
-
 app.use(router)
+
+setupInterceptors();
 app.mount('#app')

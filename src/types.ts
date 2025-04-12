@@ -4,8 +4,12 @@ export interface Drawing {
     createdAt: string; // ISO date
 }
 
-export interface Reference {
-    id: string;
-    title: string;
-    iterationTarget: number;
+export type Reference = {
+    _id?: string;
+    name: string;
+    completedIterations: number;
+    iterations: number;
+    image: string;
+    startDate: string;
+    frequecy: string;
 }

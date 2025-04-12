@@ -172,84 +172,54 @@
             </TabsList>
             <TabsContent value="active">
               <!-- Loading State -->
-              <div v-if="isLoadingReferences" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                <Card v-for="n in 3" :key="n">
-                  <CardHeader class="pb-2">
-                    <div class="h-6 bg-gray-200 rounded animate-pulse w-3/4"></div>
-                    <div class="h-4 bg-gray-200 rounded animate-pulse w-1/2 mt-2"></div>
-                  </CardHeader>
-                  <CardContent>
-                    <div class="h-40 bg-gray-200 rounded animate-pulse mb-4"></div>
-                    <div class="h-2 bg-gray-200 rounded animate-pulse mb-2"></div>
-                    <div class="flex justify-between mt-4">
-                      <div class="h-3 bg-gray-200 rounded animate-pulse w-1/3"></div>
-                      <div class="h-3 bg-gray-200 rounded animate-pulse w-1/4"></div>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <div class="h-9 bg-gray-200 rounded animate-pulse w-full"></div>
-                  </CardFooter>
-                </Card>
+              <div
+                v-if="isLoadingReferences"
+                class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
+              >
+                <PracticeCardSkeleton v-for="n in 3" :key="n" />
               </div>
               <!-- Actual Content -->
-              <div v-else class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                <!-- Practice Card -->
-                <Card v-for="(practice, index) in practices" :key="index">
-                  <CardHeader class="pb-2">
-                    <CardTitle>{{ practice.name }}</CardTitle>
-                    <CardDescription
-                      >{{ practice.completedIterations }}/{{
-                        practice.iterations
-                      }}
-                      iterations</CardDescription
-                    >
-                  </CardHeader>
-                  <CardContent>
-                    <div
-                      class="relative h-40 w-full overflow-hidden rounded-md mb-4"
-                    >
-                      <img
-                        :src="practice.image"
-                        :alt="practice.name"
-                        class="object-cover w-full h-full"
-                      />
-                    </div>
-                    <Progress
-                      :value="
-                        (practice.completedIterations /
-                          practice.totalIterations) *
-                        100
-                      "
-                      class="mb-2"
-                    />
-                    <div class="flex justify-between text-xs text-gray-500">
-                      <span>Started {{ practice.startDate }}</span>
-                      <span>{{ practice.frequency }}</span>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="outline" class="w-full"
-                      >Continue Practice</Button
-                    >
-                  </CardFooter>
-                </Card>
+              <div v-else>
+                <div v-if="activePractices.length" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                  <!-- Practice Card -->
+                  <PracticeCard
+                    v-for="practice in activePractices"
+                    :key="practice._id"
+                    :practice="practice"
+                  />
 
-                <!-- Add New Card -->
-                <div
-                  @click="showSetupForm = true"
-                  class="border border-dashed rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors h-80"
-                >
+                  <!-- Add New Card -->
                   <div
-                    class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center"
+                    @click="showSetupForm = true"
+                    class="border border-dashed rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors h-80"
                   >
-                    <PlusIcon class="h-6 w-6 text-primary" />
+                    <div
+                      class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center"
+                    >
+                      <PlusIcon class="h-6 w-6 text-primary" />
+                    </div>
+                    <p class="mt-4 text-sm font-medium">Create New Practice</p>
                   </div>
-                  <p class="mt-4 text-sm font-medium">Create New Practice</p>
                 </div>
+                <EmptyState
+                  v-else
+                  :icon="ArtistIcon"
+                  title="No active practices"
+                  description="Start a new practice to begin your journey!"
+                  action-text="Start a Practice"
+                  @action-click="showSetupForm = true"
+                />
               </div>
             </TabsContent>
+            
             <TabsContent value="completed">
-              <div class="bg-gray-50 rounded-lg p-12 text-center my-6">
+              <PracticeCard
+                v-for="practice in completedPractices"
+                :key="practice._id"
+                :practice="practice"
+              />
+
+              <div v-if="!completedPractices.length" class="bg-gray-50 rounded-lg p-12 text-center my-6">
                 <ArtistIcon class="h-16 w-16 mx-auto text-gray-400 mb-4" />
                 <h3 class="text-lg font-medium mb-2">
                   No completed practices yet
@@ -257,7 +227,47 @@
                 <p class="text-gray-500 mb-6">
                   Keep practicing and you'll see your completed work here!
                 </p>
-                <Button @click="showSetupForm = true">Start a Practice</Button>
+                <Button variant="outline" @click="showSetupForm = true">Start a Practice</Button>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="all">
+              <!-- Loading State -->
+              <div
+                v-if="isLoadingReferences"
+                class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
+              >
+                <PracticeCardSkeleton v-for="n in 3" :key="n" />
+              </div>
+              <!-- Actual Content -->
+              <div v-else>
+                <div v-if="allPractices.length" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                  <PracticeCard
+                    v-for="practice in allPractices"
+                    :key="practice._id"
+                    :practice="practice"
+                  />
+                  <!-- Add New Card -->
+                  <div
+                    @click="showSetupForm = true"
+                    class="border border-dashed rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors h-80"
+                  >
+                    <div
+                      class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center"
+                    >
+                      <PlusIcon class="h-6 w-6 text-primary" />
+                    </div>
+                    <p class="mt-4 text-sm font-medium">Create New Practice</p>
+                  </div>
+                </div>
+                <EmptyState
+                  v-else
+                  :icon="ArtistIcon"
+                  title="No practices found"
+                  description="Start your first practice to begin your journey!"
+                  action-text="Start a Practice"
+                  @action-click="showSetupForm = true"
+                />
               </div>
             </TabsContent>
           </Tabs>
@@ -305,7 +315,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import {
   PlusIcon,
   FileIcon,
@@ -313,6 +323,8 @@ import {
   ImageIcon,
   LightbulbIcon,
 } from "lucide-vue-next";
+import PracticeCardSkeleton from "@/components/preloaders/PracticeCardSkeleton.vue";
+import EmptyState from "@/components/references/EmptyState.vue";
 
 // Import shadcn components
 import { Button } from "@/components/ui/button";
@@ -327,7 +339,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Progress } from "@/components/ui/progress";
 import {
   Select,
   SelectTrigger,
@@ -337,6 +348,9 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import api from "@/lib/axios";
+import { type Reference } from "@/types";
+import type { Ref } from "vue";
+import PracticeCard from "@/components/references/PracticeCard.vue";
 
 // Mock data
 const ShufficonIcon = ImageIcon; // Placeholder for shuffle icon
@@ -346,13 +360,47 @@ const showSetupForm = ref(false);
 
 const isLoadingReferences = ref(true);
 
+const practices: Ref<Reference[]> = ref([]);
+
+const activePractices: Ref<Reference[]> = ref([]);
+const completedPractices: Ref<Reference[]> = ref([]);
+const allPractices: Ref<Reference[]> = ref([]);
+
+const currentTab = ref("active");
+
+// watch current tab for changes
+// Watch current tab for changes and update displayed practices
+watch(currentTab, (newTab) => {
+  switch (newTab) {
+    case "active":
+      practices.value = activePractices.value;
+      break;
+    case "completed":
+      practices.value = completedPractices.value;
+      break;
+    case "all":
+      practices.value = allPractices.value;
+      break;
+  }
+  console.log(newTab, practices.value);
+});
+
 // Fetch references on component mount
 const fetchReferences = async () => {
   try {
-    const response = await api.get('/references');
-    practices.value = response.data.references;
+    const response = await api.get("/references");
+    let references: Reference[] = response.data.references;
+    practices.value = references;
+
+    allPractices.value = references;
+    activePractices.value = references.filter(
+      (r) => r.completedIterations < r.iterations
+    );
+    completedPractices.value = references.filter(
+      (r) => r.completedIterations === r.iterations
+    );
   } catch (error) {
-    console.error('Error fetching references:', error);
+    console.error("Error fetching references:", error);
   } finally {
     isLoadingReferences.value = false;
   }
@@ -361,26 +409,6 @@ const fetchReferences = async () => {
 onMounted(() => {
   fetchReferences();
 });
-
-
-const practices = ref([
-  {
-    name: "Portrait Study",
-    completedIterations: 3,
-    totalIterations: 10,
-    reference: "/api/placeholder/400/320",
-    startDate: "April 5, 2025",
-    frequency: "Daily",
-  },
-  {
-    name: "Hand Poses",
-    completedIterations: 5,
-    totalIterations: 12,
-    reference: "/api/placeholder/400/320",
-    startDate: "March 28, 2025",
-    frequency: "3x per week",
-  },
-]);
 
 const createReferenceForm = ref({
   name: "",
@@ -411,12 +439,12 @@ const createPractice = async () => {
       formData.append("image", createReferenceForm.value.file);
     }
 
-    let res = await api.post('/references', formData, {
+    let res = await api.post("/references", formData, {
       headers: {
-        "Content-Type": "multipart/form-data"
-      }
+        "Content-Type": "multipart/form-data",
+      },
     });
-    
+
     console.log(res.status, res.data);
 
     console.log("Practice created:", createReferenceForm.value);
