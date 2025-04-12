@@ -2,6 +2,20 @@
 <script setup lang="ts">
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar.vue";
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+
+const route = useRoute();
+const isAuthRoute = computed(() => {
+  return route.path === '/auth' || route.path === '/authSuccess';
+});
+
+import { useUserStore } from "@/stores/userStore";
+const userStore = useUserStore();
+
+const profilePicture = computed(() => {
+  return userStore.user?.profilePicture || '/api/placeholder/32/32';
+});
 
 import {
   BookOpenIcon,
@@ -24,9 +38,9 @@ import {
 <template>
   <div class="flex h-screen" style="width: 100vw">
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar v-if="!isAuthRoute" />
       <main class="flex-1 overflow-y-auto">
-        <SidebarTrigger />
+        <SidebarTrigger v-if="!isAuthRoute" />
         <!-- Header -->
         <header class="bg-white border-b sticky top-0 z-10">
           <div
@@ -46,7 +60,7 @@ import {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" class="rounded-full">
                     <Avatar>
-                      <AvatarImage src="/api/placeholder/32/32" alt="User" />
+                      <AvatarImage :src="profilePicture" alt="User" />
                       <AvatarFallback>AP</AvatarFallback>
                     </Avatar>
                   </Button>

@@ -11,6 +11,18 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
+import { computed } from "vue";
+import { useUserStore } from "@/stores/userStore";
+const userStore = useUserStore();
+
+// const profilePicture = computed(() => {
+//   return userStore.user?.profilePicture || '/api/placeholder/32/32';
+// });
+
+const fullName = computed(() => {
+  return userStore.fullName || 'User';
+});
+
 // Menu items.
 const items = [
   {
@@ -83,10 +95,10 @@ const items = [
     <div class="border-t border-gray-200 p-4">
       <div class="flex items-center gap-3">
         <div class="h-9 w-9 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 font-medium">
-          U
+          {{ fullName[0] }}
         </div>
         <div>
-          <div class="text-sm font-medium">User Name</div>
+          <div class="text-sm font-medium">{{ fullName }}</div>
           <div class="text-xs text-gray-500">Free Plan</div>
         </div>
       </div>
