@@ -34,110 +34,129 @@
             >
           </CardHeader>
           <CardContent>
-            <form class="space-y-6" @submit.prevent="createPractice">
-              <div class="grid md:grid-cols-2 gap-6">
-                <div class="space-y-4">
-                  <div class="mb-4">
-                    <Label class="my-2" for="practice-name"
-                      >Practice Name</Label
-                    >
-                    <Input
-                      id="practice-name"
-                      v-model="createReferenceForm.name"
-                      placeholder="e.g., Portrait Study"
-                    />
-                  </div>
-                  <div>
-                    <Label class="my-2" for="iterations"
-                      >Number of Iterations</Label
-                    >
-                    <Input
-                      id="iterations"
-                      type="number"
-                      min="1"
-                      v-model="createReferenceForm.iterations"
-                      placeholder="10"
-                    />
-                  </div>
-                  <div class="mb-4">
-                    <Label class="my-2" for="frequency">Frequency</Label>
-                    <Select v-model="createReferenceForm.frequency">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select frequency" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="daily">Daily</SelectItem>
-                        <SelectItem value="weekly">Weekly</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div class="mb-4">
-                    <Label class="my-2" for="goal">Your Goal</Label>
-                    <Textarea
-                      id="goal"
-                      v-model="createReferenceForm.goal"
-                      placeholder="What do you want to improve with this practice?"
-                    />
-                  </div>
-                </div>
-                <div class="flex flex-col gap-4">
-                  <Label>Reference Image</Label>
-                  <div
-                    class="relative border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center bg-gray-50 h-64"
-                  >
-                    <div v-if="!filePreview">
-                      <ImageIcon class="h-12 w-12 text-gray-400" />
-                      <p class="mt-2 text-sm text-gray-500">
-                        Drag & drop or click to upload
-                      </p>
-                      <p class="text-xs text-gray-400">
-                        JPG, PNG or GIF, Max 5MB
-                      </p>
-                    </div>
-
-                    <div v-else>
-                      <img
-                        :src="filePreview"
-                        alt="Selected reference image"
-                        class="absolute inset-0 w-full h-full object-fit z-0"
+            <div class="relative">
+              <form class="space-y-6" @submit.prevent="createPractice">
+                <div
+                  class="grid md:grid-cols-2 gap-6"
+                  :class="{ 'opacity-50': isSubmittingForm }"
+                >
+                  <div class="space-y-4">
+                    <div class="mb-4">
+                      <Label class="my-2" for="practice-name"
+                        >Practice Name</Label
+                      >
+                      <Input
+                        id="practice-name"
+                        v-model="createReferenceForm.name"
+                        placeholder="e.g., Portrait Study"
                       />
                     </div>
-
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      class="mt-4 z-1"
-                      @click="$refs.fileInput.click()"
-                      >Select File</Button
-                    >
-                    <input
-                      ref="fileInput"
-                      type="file"
-                      class="hidden"
-                      accept="image/*"
-                      @change="handleFileUpload"
-                    />
+                    <div>
+                      <Label class="my-2" for="iterations"
+                        >Number of Iterations</Label
+                      >
+                      <Input
+                        id="iterations"
+                        type="number"
+                        min="1"
+                        v-model="createReferenceForm.iterations"
+                        placeholder="10"
+                      />
+                    </div>
+                    <div class="mb-4">
+                      <Label class="my-2" for="frequency">Frequency</Label>
+                      <Select v-model="createReferenceForm.frequency">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select frequency" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="daily">Daily</SelectItem>
+                          <SelectItem value="weekly">Weekly</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div class="mb-4">
+                      <Label class="my-2" for="goal">Your Goal</Label>
+                      <Textarea
+                        id="goal"
+                        v-model="createReferenceForm.goal"
+                        placeholder="What do you want to improve with this practice?"
+                      />
+                    </div>
                   </div>
-                  <div class="flex gap-2">
-                    <Button variant="outline" size="sm" class="flex-1">
-                      <SearchIcon class="h-4 w-4 mr-2" />
-                      Browse Library
-                    </Button>
-                    <Button variant="outline" size="sm" class="flex-1">
-                      <ShufficonIcon class="h-4 w-4 mr-2" />
-                      Random Reference
-                    </Button>
+                  <div class="flex flex-col gap-4">
+                    <Label>Reference Image</Label>
+                    <div
+                      class="relative border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center bg-gray-50 h-64"
+                    >
+                      <div v-if="!filePreview">
+                        <ImageIcon class="h-12 w-12 text-gray-400" />
+                        <p class="mt-2 text-sm text-gray-500">
+                          Drag & drop or click to upload
+                        </p>
+                        <p class="text-xs text-gray-400">
+                          JPG, PNG or GIF, Max 5MB
+                        </p>
+                      </div>
+
+                      <div v-else>
+                        <img
+                          :src="filePreview"
+                          alt="Selected reference image"
+                          class="absolute inset-0 w-full h-full object-fit z-0"
+                        />
+                      </div>
+
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        class="mt-4 z-1"
+                        @click="$refs.fileInput.click()"
+                        >Select File</Button
+                      >
+                      <input
+                        ref="fileInput"
+                        type="file"
+                        class="hidden"
+                        accept="image/*"
+                        @change="handleFileUpload"
+                      />
+                    </div>
+                    <div class="flex gap-2">
+                      <Button variant="outline" size="sm" class="flex-1">
+                        <SearchIcon class="h-4 w-4 mr-2" />
+                        Browse Library
+                      </Button>
+                      <Button variant="outline" size="sm" class="flex-1">
+                        <ShufficonIcon class="h-4 w-4 mr-2" />
+                        Random Reference
+                      </Button>
+                    </div>
                   </div>
                 </div>
+              </form>
+              <div
+                v-if="isSubmittingForm"
+                class="absolute inset-0 flex items-center justify-center bg-white/50"
+              >
+                <div
+                  class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"
+                ></div>
               </div>
-            </form>
+            </div>
           </CardContent>
           <CardFooter class="flex justify-between">
-            <Button variant="ghost" @click="showSetupForm = false"
+            <Button
+              variant="ghost"
+              @click="showSetupForm = false"
+              :disabled="isSubmittingForm"
               >Cancel</Button
             >
-            <Button variant="outline" @click="createPractice"
+            <Button
+              variant="outline"
+              @click="createPractice"
+              :disabled="isSubmittingForm"
               >Create Practice</Button
             >
           </CardFooter>
@@ -152,14 +171,35 @@
               <TabsTrigger value="all">All</TabsTrigger>
             </TabsList>
             <TabsContent value="active">
-              <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+              <!-- Loading State -->
+              <div v-if="isLoadingReferences" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                <Card v-for="n in 3" :key="n">
+                  <CardHeader class="pb-2">
+                    <div class="h-6 bg-gray-200 rounded animate-pulse w-3/4"></div>
+                    <div class="h-4 bg-gray-200 rounded animate-pulse w-1/2 mt-2"></div>
+                  </CardHeader>
+                  <CardContent>
+                    <div class="h-40 bg-gray-200 rounded animate-pulse mb-4"></div>
+                    <div class="h-2 bg-gray-200 rounded animate-pulse mb-2"></div>
+                    <div class="flex justify-between mt-4">
+                      <div class="h-3 bg-gray-200 rounded animate-pulse w-1/3"></div>
+                      <div class="h-3 bg-gray-200 rounded animate-pulse w-1/4"></div>
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <div class="h-9 bg-gray-200 rounded animate-pulse w-full"></div>
+                  </CardFooter>
+                </Card>
+              </div>
+              <!-- Actual Content -->
+              <div v-else class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 <!-- Practice Card -->
                 <Card v-for="(practice, index) in practices" :key="index">
                   <CardHeader class="pb-2">
                     <CardTitle>{{ practice.name }}</CardTitle>
                     <CardDescription
                       >{{ practice.completedIterations }}/{{
-                        practice.totalIterations
+                        practice.iterations
                       }}
                       iterations</CardDescription
                     >
@@ -169,7 +209,7 @@
                       class="relative h-40 w-full overflow-hidden rounded-md mb-4"
                     >
                       <img
-                        :src="practice.reference"
+                        :src="practice.image"
                         :alt="practice.name"
                         class="object-cover w-full h-full"
                       />
@@ -265,7 +305,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import {
   PlusIcon,
   FileIcon,
@@ -296,12 +336,32 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import api from "@/lib/axios";
 
 // Mock data
 const ShufficonIcon = ImageIcon; // Placeholder for shuffle icon
 const ArtistIcon = ImageIcon; // Placeholder for artist icon
 
 const showSetupForm = ref(false);
+
+const isLoadingReferences = ref(true);
+
+// Fetch references on component mount
+const fetchReferences = async () => {
+  try {
+    const response = await api.get('/references');
+    practices.value = response.data.references;
+  } catch (error) {
+    console.error('Error fetching references:', error);
+  } finally {
+    isLoadingReferences.value = false;
+  }
+};
+
+onMounted(() => {
+  fetchReferences();
+});
+
 
 const practices = ref([
   {
@@ -331,12 +391,39 @@ const createReferenceForm = ref({
 });
 
 const filePreview = ref("");
-const isSubmittingForm = ref(true);
+const isSubmittingForm = ref(false);
 
-const createPractice = () => {
-  // This would normally save the form data
-  // showSetupForm.value = false;
-  console.log("Practice created:", createReferenceForm.value);
+const createPractice = async () => {
+  try {
+    isSubmittingForm.value = true;
+    // This would normally save the form data
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // Submit form data to backend
+    const formData = new FormData();
+    formData.append("name", createReferenceForm.value.name);
+    formData.append(
+      "iterations",
+      createReferenceForm.value.iterations.toString()
+    );
+    formData.append("frequency", createReferenceForm.value.frequency);
+    formData.append("goal", createReferenceForm.value.goal);
+    if (createReferenceForm.value.file) {
+      formData.append("image", createReferenceForm.value.file);
+    }
+
+    let res = await api.post('/references', formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+    
+    console.log(res.status, res.data);
+
+    console.log("Practice created:", createReferenceForm.value);
+    showSetupForm.value = false;
+  } finally {
+    isSubmittingForm.value = false;
+  }
 };
 
 const handleFileUpload = (e: Event) => {
