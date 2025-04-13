@@ -47,7 +47,7 @@
   
   // Progress percent
   const progressPercent = computed(() => {
-    return Math.min(100, (completed.value / props.reference.iterationTarget) * 100)
+    return Math.min(100, (completed.value / props.reference.iterations) * 100)
   })
   
   // Get last drawing date

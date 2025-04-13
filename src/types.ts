@@ -6,7 +6,7 @@ export interface CategoryScores {
     lineQuality: number;
     composition: number;
     likeness: number;
-    _id: string;
+    _id: any;
 }
 
 export interface CategoryFeedback {
@@ -43,5 +43,5 @@ export type Reference = {
     iterations: number;
     image: string;
     startDate: string;
-    frequecy: string;
+    frequency: string;
 }

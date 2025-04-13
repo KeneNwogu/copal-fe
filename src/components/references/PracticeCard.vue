@@ -16,7 +16,7 @@
         />
       </div>
       <Progress
-        :value="(practice.completedIterations / practice.totalIterations) * 100"
+        :value="(practice.completedIterations / practice.iterations) * 100"
         class="mb-2"
       />
       <div class="flex justify-between text-xs text-gray-500">

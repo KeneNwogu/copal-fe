@@ -119,54 +119,16 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { LightbulbIcon, XIcon } from "lucide-vue-next";
 import type { Drawing } from "@/types";
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'close'): void
 }>();
 
 const props = defineProps<{
   drawing: Drawing;
-  tips: {
-    type: string[];
-    default: () => [
-      "Focus on improving your line consistency by practicing gesture drawing daily.",
-      "Work on perspective skills by studying basic vanishing point exercises.",
-      "Try using reference images more deliberately to improve proportions."
-    ];
-  };
-  recommendedCourses: {
-    type: Array<{
-      title: string;
-      duration: string;
-      level: string;
-      category: string;
-    }>;
-    default: () => [
-      {
-        title: "Fundamentals of Drawing Proportions";
-        duration: "4 weeks";
-        level: "Beginner";
-        category: "Fundamentals";
-      },
-      {
-        title: "Mastering Digital Brushwork";
-        duration: "6 weeks";
-        level: "Intermediate";
-        category: "Technique";
-      },
-      {
-        title: "Advanced Character Design";
-        duration: "8 weeks";
-        level: "Advanced";
-        category: "Advanced";
-      }
-    ];
-  };
 }>();
 
 const scoreDescription = computed(() => {

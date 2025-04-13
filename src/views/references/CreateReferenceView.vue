@@ -112,7 +112,7 @@
                         variant="ghost"
                         size="sm"
                         class="mt-4 z-1"
-                        @click="$refs.fileInput.click()"
+                        @click="($refs.fileInput as any).click()"
                         >Select File</Button
                       >
                       <input

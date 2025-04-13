@@ -235,8 +235,8 @@ const handleSubmit = async () => {
 const toggleForm = () => {
   isSignIn.value = !isSignIn.value;
   // Reset form and errors when switching between sign in and sign up
-  Object.keys(form).forEach(key => form[key] = '');
-  Object.keys(errors).forEach(key => errors[key] = '');
+  // Object.keys(form).forEach(key => form[key] = '');
+  // Object.keys(errors).forEach(key => errors[key] = '');
 };
 
 

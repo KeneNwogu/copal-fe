@@ -5,7 +5,7 @@ import type { Reference } from '@/types';
 
 const props = defineProps<{
   selectedReference: Reference;
-  selectedDay: Date;
+  selectedDay: string;
 }>();
 
 const selectedDate = computed(() => new Date(props.selectedDay))
