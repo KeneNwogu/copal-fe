@@ -36,7 +36,7 @@ const openReferenceDialog = () => {
       </div>
     </CardContent>
     <CardFooter>
-      <Button @click="openReferenceDialog" class="text-black">
+      <Button variant="secondary" @click="openReferenceDialog" class="text-black">
         <Plus class="mr-2 h-4 w-4" />
         Add New Reference
       </Button>

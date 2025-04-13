@@ -2,10 +2,12 @@
 <script setup lang="ts">
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar.vue";
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { computed } from 'vue';
 
 const route = useRoute();
+const router = useRouter();
+
 const isAuthRoute = computed(() => {
   return route.path === '/auth' || route.path === '/authSuccess';
 });
@@ -16,6 +18,11 @@ const userStore = useUserStore();
 const profilePicture = computed(() => {
   return userStore.user?.profilePicture || '/api/placeholder/32/32';
 });
+
+const logoutUser = () => {
+  userStore.clearUserData();
+  router.push("/auth");
+}
 
 import {
   BookOpenIcon,
@@ -56,7 +63,7 @@ import {
                 <GalleryHorizontalEndIcon class="h-4 w-4 mr-2" />
                 My Gallery
               </Button>
-              <DropdownMenu>
+              <DropdownMenu v-if="userStore.user">
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" class="rounded-full">
                     <Avatar>
@@ -70,7 +77,9 @@ import {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>Profile</DropdownMenuItem>
                   <DropdownMenuItem>Settings</DropdownMenuItem>
-                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                  <DropdownMenuItem
+                    @click="logoutUser"
+                  >Logout</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
