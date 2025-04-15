@@ -443,11 +443,10 @@ const createPractice = async () => {
         "Content-Type": "multipart/form-data",
       },
     });
-
-    console.log(res.status, res.data);
-
-    console.log("Practice created:", createReferenceForm.value);
+    // console.log(res.status, res.data);
+    // console.log("Practice created:", createReferenceForm.value);
     showSetupForm.value = false;
+    fetchReferences();
   } finally {
     isSubmittingForm.value = false;
   }
