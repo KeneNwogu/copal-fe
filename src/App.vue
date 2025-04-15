@@ -55,13 +55,13 @@ import {
           >
             <h2 class="text-xl font-bold text-primary">Copal</h2>
             <div class="flex items-center gap-4">
-              <Button variant="outline" size="sm">
-                <BookOpenIcon class="h-4 w-4 mr-2" />
-                Tutorials
+              <Button variant="outline" size="sm" class="hidden md:flex">
+                <BookOpenIcon class="h-4 w-4 md:mr-2" />
+                <span class="hidden md:inline">Tutorials</span>
               </Button>
-              <Button variant="outline" size="sm">
-                <GalleryHorizontalEndIcon class="h-4 w-4 mr-2" />
-                My Gallery
+              <Button variant="outline" v-if="userStore.user" size="sm" class="flex">
+                <GalleryHorizontalEndIcon class="h-4 w-4 md:mr-2" />
+                <span class="hidden md:inline">My Gallery</span>
               </Button>
               <DropdownMenu v-if="userStore.user">
                 <DropdownMenuTrigger asChild>
