@@ -11,9 +11,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 <template>
   <div class="ml-8 mx-auto">
-    <div class="flex items-start w-[90%] my-3 justify-between">
-      <ReferenceOverview class="mr-4" />
-      <DrawingOverview />
+    <div class="flex flex-col md:flex-row items-start w-[90%] my-3 justify-between gap-4">
+      <ReferenceOverview class="w-full md:w-auto md:mr-4" />
+      <DrawingOverview class="w-full md:w-auto" />
     </div>
 
     <section class="my-5 w-[90%]">

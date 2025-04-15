@@ -18,7 +18,7 @@
               <FileIcon class="h-4 w-4 mr-2" />
               Import Reference
             </Button>
-            <Button size="sm" variant="outline">
+            <Button size="sm" variant="outline" @click="showSetupForm = true">
               <PlusIcon class="h-4 w-4 mr-2" />
               New Practice
             </Button>
@@ -34,38 +34,36 @@
             >
           </CardHeader>
           <CardContent>
-            <div class="relative">
-              <form class="space-y-6" @submit.prevent="createPractice">
+            <div class="relative px-2 sm:px-4">
+              <form class="space-y-4 sm:space-y-6" @submit.prevent="createPractice">
                 <div
-                  class="grid md:grid-cols-2 gap-6"
+                  class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
                   :class="{ 'opacity-50': isSubmittingForm }"
                 >
-                  <div class="space-y-4">
-                    <div class="mb-4">
-                      <Label class="my-2" for="practice-name"
-                        >Practice Name</Label
-                      >
+                  <div class="space-y-3 sm:space-y-4">
+                    <div class="mb-2 sm:mb-4">
+                      <Label class="mb-1 sm:mb-2" for="practice-name">Practice Name</Label>
                       <Input
                         id="practice-name"
                         v-model="createReferenceForm.name"
                         placeholder="e.g., Portrait Study"
+                        class="w-full"
                       />
                     </div>
                     <div>
-                      <Label class="my-2" for="iterations"
-                        >Number of Iterations</Label
-                      >
+                      <Label class="mb-1 sm:mb-2" for="iterations">Number of Iterations</Label>
                       <Input
                         id="iterations"
                         type="number"
                         min="1"
                         v-model="createReferenceForm.iterations"
                         placeholder="10"
+                        class="w-full"
                       />
                     </div>
-                    <div class="mb-4">
-                      <Label class="my-2" for="frequency">Frequency</Label>
-                      <Select v-model="createReferenceForm.frequency">
+                    <div class="mb-2 sm:mb-4">
+                      <Label class="mb-1 sm:mb-2" for="frequency">Frequency</Label>
+                      <Select v-model="createReferenceForm.frequency" class="w-full">
                         <SelectTrigger>
                           <SelectValue placeholder="Select frequency" />
                         </SelectTrigger>
@@ -75,12 +73,13 @@
                         </SelectContent>
                       </Select>
                     </div>
-                    <div class="mb-4">
-                      <Label class="my-2" for="goal">Your Goal</Label>
+                    <div class="mb-2 sm:mb-4">
+                      <Label class="mb-1 sm:mb-2" for="goal">Your Goal</Label>
                       <Textarea
                         id="goal"
                         v-model="createReferenceForm.goal"
                         placeholder="What do you want to improve with this practice?"
+                        class="w-full"
                       />
                     </div>
                   </div>
@@ -123,7 +122,7 @@
                         @change="handleFileUpload"
                       />
                     </div>
-                    <div class="flex gap-2">
+                    <!-- <div class="flex gap-2">
                       <Button variant="outline" size="sm" class="flex-1">
                         <SearchIcon class="h-4 w-4 mr-2" />
                         Browse Library
@@ -132,7 +131,7 @@
                         <ShufficonIcon class="h-4 w-4 mr-2" />
                         Random Reference
                       </Button>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </form>
@@ -155,7 +154,7 @@
             >
             <Button
               variant="outline"
-              @click="createPractice"
+              @click="showSetupForm = true"
               :disabled="isSubmittingForm"
               >Create Practice</Button
             >

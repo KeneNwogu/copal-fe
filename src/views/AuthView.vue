@@ -131,9 +131,10 @@
           <button
             @click="initiateGoogleSignIn"
             type="button"
-            class="w-full flex items-center justify-center gap-3 py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            :disabled="isGoogleLoading"
+            class="w-full flex items-center justify-center gap-3 py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <svg class="h-5 w-5" viewBox="0 0 24 24">
+            <svg v-if="!isGoogleLoading" class="h-5 w-5" viewBox="0 0 24 24">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                 fill="#4285F4"
@@ -151,6 +152,27 @@
                 fill="#EA4335"
               />
             </svg>
+            <svg
+              v-else
+              class="animate-spin h-5 w-5 text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              />
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
             Sign {{ isSignIn ? 'in' : 'up' }} with Google
           </button>
         </div>
@@ -165,6 +187,7 @@ import axios from 'axios';
 
 const isSignIn = ref(true);
 const isLoading = ref(false);
+const isGoogleLoading = ref(false);
 
 const form = reactive({
   email: '',
@@ -242,6 +265,8 @@ const toggleForm = () => {
 
 
 const initiateGoogleSignIn = async () => {
+  if (isGoogleLoading.value) return;
+  isGoogleLoading.value = true;
   try {
     const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/user/auth/google`, {
@@ -254,6 +279,7 @@ const initiateGoogleSignIn = async () => {
     window.location.href = response.data.url;
   } catch (error) {
     console.error('Error initiating Google sign in:', error);
+    isGoogleLoading.value = false;
   }
 };
 
