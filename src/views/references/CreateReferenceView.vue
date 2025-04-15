@@ -154,7 +154,7 @@
             >
             <Button
               variant="outline"
-              @click="showSetupForm = true"
+              @click="createPractice"
               :disabled="isSubmittingForm"
               >Create Practice</Button
             >
