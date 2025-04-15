@@ -84,8 +84,8 @@ const showUploadForm = (day: string) => {
 </script>
 
 <template>
-  <div class="flex mt-5 gap-9">
-    <div class="p-4 w-full flex flex-col">
+  <div class="flex flex-col lg:flex-row mt-5 gap-9">
+    <div class="p-4 w-full lg:w-[60%] flex flex-col">
       <div v-if="error" class="text-red-500 mb-4">
         {{ error }}
       </div>
@@ -120,7 +120,7 @@ const showUploadForm = (day: string) => {
       </div>
     </div>
 
-    <div class="space-y-4">
+    <div class="w-full lg:w-[40%] space-y-4">
       <DrawingRating
         :drawing="selectedDrawing"
         v-if="selectedDrawing"
