@@ -20,7 +20,7 @@
         class="mb-2"
       />
       <div class="flex justify-between text-xs text-gray-500">
-        <span>Started {{ practice.startDate }}</span>
+        <span>Started {{ practice.createdAt }}</span>
         <span>{{ practice.frequency }}</span>
       </div>
     </CardContent>

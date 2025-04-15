@@ -42,6 +42,7 @@ export type Reference = {
     completedIterations: number;
     iterations: number;
     image: string;
-    startDate: string;
     frequency: string;
+    createdAt: string;
+    updatedAt: string;
 }

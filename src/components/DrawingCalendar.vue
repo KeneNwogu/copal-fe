@@ -49,6 +49,7 @@
           'bg-green-500 text-white': getDrawingStatus(day) === 'high-score',
           'bg-gray-200': getDrawingStatus(day) === 'no-drawing',
           'hover:bg-gray-100': getDrawingStatus(day) === 'no-drawing',
+          'hidden': getCurrentDay(day) < createdAt,
         }"
         :disabled="!isDrawingDay(day) && getCurrentDay(day) !== todayISO"
         @click="
@@ -78,6 +79,7 @@ defineEmits(["showUploadForm", "showDrawingProgress"]);
 
 const today = new Date();
 const todayISO = today.toISOString().slice(0, 10);
+const createdAt = props.reference.createdAt.slice(0, 10);
 
 const currentMonth = ref(today.getMonth());
 const currentYear = ref(today.getFullYear());
