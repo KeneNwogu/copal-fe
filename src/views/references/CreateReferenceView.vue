@@ -438,7 +438,7 @@ const createPractice = async () => {
       formData.append("image", createReferenceForm.value.file);
     }
 
-    let res = await api.post("/references", formData, {
+    await api.post("/references", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
