@@ -318,7 +318,7 @@ import { ref, onMounted, watch } from "vue";
 import {
   PlusIcon,
   FileIcon,
-  SearchIcon,
+  // SearchIcon,
   ImageIcon,
   LightbulbIcon,
 } from "lucide-vue-next";
@@ -352,7 +352,7 @@ import type { Ref } from "vue";
 import PracticeCard from "@/components/references/PracticeCard.vue";
 
 // Mock data
-const ShufficonIcon = ImageIcon; // Placeholder for shuffle icon
+// const ShufficonIcon = ImageIcon; // Placeholder for shuffle icon
 const ArtistIcon = ImageIcon; // Placeholder for artist icon
 
 const showSetupForm = ref(false);
