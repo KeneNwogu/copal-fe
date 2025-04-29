@@ -85,7 +85,7 @@
               :class="{ 'border-red-500': errors.firstName }"
               placeholder="First Name"
             />
-            <p v-for="error in errors.firstName" :key="error" v-if="errors.firstName" class="mt-1 text-sm text-red-600">
+            <p v-for="error in errors.firstName" :key="error" class="mt-1 text-sm text-red-600">
               {{ error }}
             </p>
           </div>
@@ -102,7 +102,7 @@
               :class="{ 'border-red-500': errors.lastName }"
               placeholder="Last Name"
             />
-            <p v-for="error in errors.lastName" :key="error" v-if="errors.lastName" class="mt-1 text-sm text-red-600">
+            <p v-for="error in errors.lastName" :key="error" class="mt-1 text-sm text-red-600">
               {{ error }}
             </p>
           </div>
@@ -119,7 +119,7 @@
               :class="{ 'border-red-500': errors.email }"
               placeholder="Email address"
             />
-            <p v-for="error in errors.email" :key="error" v-if="errors.email" class="mt-1 text-sm text-red-600">
+            <p v-for="error in errors.email" :key="error" class="mt-1 text-sm text-red-600">
               {{ error }}
             </p>
           </div>
@@ -135,7 +135,7 @@
               :class="{ 'border-red-500': errors.password }"
               placeholder="Password"
             />
-            <p v-for="error in errors.password" :key="error" v-if="errors.password" class="mt-1 text-sm text-red-600">
+            <p v-for="error in errors.password" :key="error" class="mt-1 text-sm text-red-600">
               {{ error }}
             </p>
           </div>
@@ -153,8 +153,8 @@
               :class="{ 'border-red-500': errors.confirmPassword }"
               placeholder="Confirm Password"
             />
-            <p v-if="errors.confirmPassword" class="mt-1 text-sm text-red-600">
-              {{ errors.confirmPassword }}
+            <p v-for="error in errors.confirmPassword" :key="error" class="mt-1 text-sm text-red-600">
+              {{ error }}
             </p>
           </div>
         </div>
@@ -302,12 +302,18 @@ const form = reactive({
   rememberMe: false
 });
 
-let errors = reactive({
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  confirmPassword: ''
+let errors: {
+  firstName: string[];
+  lastName: string[];
+  email: string[];
+  password: string[];
+  confirmPassword: string[];
+} = reactive({
+  firstName: [],
+  lastName: [],
+  email: [],
+  password: [],
+  confirmPassword: []
 });
 
 const resetForm = () => {
@@ -321,21 +327,22 @@ const resetForm = () => {
 
 const resetErrors = () => {
   errors = reactive({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    firstName: [],
+    lastName: [],
+    email: [],
+    password: [],
+    confirmPassword: []
   });
+
+  non_field_error.value = "";
 }
 
 const non_field_error = ref("");
 
 const validateForm = () => {
   let isValid = true;
-  errors.email = '';
-  errors.password = '';
-  errors.confirmPassword = '';
+
+  resetErrors();
 
   // Email validation
   if (!form.email) {
@@ -357,7 +364,7 @@ const validateForm = () => {
 
   // Confirm password validation (only for sign up)
   if (!isSignIn.value && form.password !== form.confirmPassword) {
-    errors.confirmPassword = 'Passwords do not match';
+    errors.confirmPassword = ['Passwords do not match'];
     isValid = false;
   }
 
@@ -422,7 +429,6 @@ const toggleForm = () => {
   isSignIn.value = !isSignIn.value;
   resetForm();
   resetErrors();
-  non_field_error.value = "";
 };
 
 
