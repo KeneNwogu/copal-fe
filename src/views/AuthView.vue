@@ -82,7 +82,7 @@
               type="text"
               required
               class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              :class="{ 'border-red-500': errors.firstName }"
+              :class="{ 'border-red-500': errors.firstName.length > 0 }"
               placeholder="First Name"
             />
             <p v-for="error in errors.firstName" :key="error" class="mt-1 text-sm text-red-600">
@@ -99,7 +99,7 @@
               type="text"
               required
               class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              :class="{ 'border-red-500': errors.lastName }"
+              :class="{ 'border-red-500': errors.lastName.length > 0 }"
               placeholder="Last Name"
             />
             <p v-for="error in errors.lastName" :key="error" class="mt-1 text-sm text-red-600">
@@ -116,7 +116,7 @@
               type="email"
               required
               class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              :class="{ 'border-red-500': errors.email }"
+              :class="{ 'border-red-500': errors.email.length > 0 }"
               placeholder="Email address"
             />
             <p v-for="error in errors.email" :key="error" class="mt-1 text-sm text-red-600">
@@ -132,7 +132,7 @@
               type="password"
               required
               class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              :class="{ 'border-red-500': errors.password }"
+              :class="{ 'border-red-500': errors.password.length > 0 }"
               placeholder="Password"
             />
             <p v-for="error in errors.password" :key="error" class="mt-1 text-sm text-red-600">
@@ -150,7 +150,7 @@
               type="password"
               required
               class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              :class="{ 'border-red-500': errors.confirmPassword }"
+              :class="{ 'border-red-500': errors.confirmPassword.length > 0 }"
               placeholder="Confirm Password"
             />
             <p v-for="error in errors.confirmPassword" :key="error" class="mt-1 text-sm text-red-600">
