@@ -58,11 +58,13 @@ onMounted(() => {
         class="w-full md:w-auto md:mr-4"
         :total-references="referencesCount"
         :last-reference-upload="latestReference"
+        :is-loading="isLoading"
       />
       <DrawingOverview
         class="w-full md:w-auto"
         :total-drawings="drawingsCount"
         :last-drawing-upload="latestDrawing"
+        :is-loading="isLoading"
       />
     </div>
 
