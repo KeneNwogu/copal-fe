@@ -339,19 +339,19 @@ const validateForm = () => {
 
   // Email validation
   if (!form.email) {
-    errors.email = 'Email is required';
+    errors.email = ['Email is required'];
     isValid = false;
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-    errors.email = 'Please enter a valid email address';
+    errors.email = ['Please enter a valid email address'];
     isValid = false;
   }
 
   // Password validation
   if (!form.password) {
-    errors.password = 'Password is required';
+    errors.password = ['Password is required'];
     isValid = false;
-  } else if (form.password.length < 8) {
-    errors.password = 'Password must be at least 8 characters long';
+  } else if (form.password.length < 8 && !isSignIn.value) {
+    errors.password = ['Password must be at least 8 characters long'];
     isValid = false;
   }
 
