@@ -416,7 +416,7 @@ const handleSubmit = async () => {
       if(error.response?.data?.message) non_field_error.value = error.response.data.message;
       else {
         // form errors
-        errors = error.response.data;
+        errors = { ...errors, ...error.response.data };
       }
     }
     console.error('Authentication error:', error);
