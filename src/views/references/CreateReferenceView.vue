@@ -35,6 +35,10 @@
           </CardHeader>
           <CardContent>
             <div class="relative px-2 sm:px-4">
+              <!-- Non-field error display -->
+              <div v-if="errors.non_field.length" class="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
+                <p class="text-sm text-red-600">{{ errors.non_field[0] }}</p>
+              </div>
               <form class="space-y-4 sm:space-y-6" @submit.prevent="createPractice">
                 <div
                   class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
@@ -48,7 +52,9 @@
                         v-model="createReferenceForm.name"
                         placeholder="e.g., Portrait Study"
                         class="w-full"
+                        :error="errors.name?.length > 0"
                       />
+                      <p v-if="errors.name?.length" class="text-sm text-red-500 mt-1">{{ errors.name[0] }}</p>
                     </div>
                     <div>
                       <Label class="mb-1 sm:mb-2" for="iterations">Number of Iterations</Label>
@@ -59,11 +65,13 @@
                         v-model="createReferenceForm.iterations"
                         placeholder="10"
                         class="w-full"
+                        :error="errors.iterations?.length > 0"
                       />
+                      <p v-if="errors.iterations?.length" class="text-sm text-red-500 mt-1">{{ errors.iterations[0] }}</p>
                     </div>
                     <div class="mb-2 sm:mb-4">
                       <Label class="mb-1 sm:mb-2" for="frequency">Frequency</Label>
-                      <Select v-model="createReferenceForm.frequency" class="w-full">
+                      <Select v-model="createReferenceForm.frequency" class="w-full" :error="errors.frequency?.length > 0">
                         <SelectTrigger>
                           <SelectValue placeholder="Select frequency" />
                         </SelectTrigger>
@@ -80,7 +88,9 @@
                         v-model="createReferenceForm.goal"
                         placeholder="What do you want to improve with this practice?"
                         class="w-full"
+                        :error="errors.goal?.length > 0"
                       />
+                      <p v-if="errors.goal?.length" class="text-sm text-red-500 mt-1">{{ errors.goal[0] }}</p>
                     </div>
                   </div>
                   <div class="flex flex-col gap-4">
@@ -314,7 +324,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import {
   PlusIcon,
   FileIcon,
@@ -411,20 +421,43 @@ onMounted(() => {
 
 const createReferenceForm = ref({
   name: "",
-  iterations: 0,
+  iterations: 1,
   frequency: "daily",
   goal: "",
   file: null as File | null,
 });
+
+let errors: {
+  name: string[];
+  iterations: string[];
+  frequency: string[];
+  goal: string[];
+  file: string[];
+  non_field: string[];
+} = reactive({
+  name: [],
+  iterations: [],
+  frequency: [],
+  goal: [],
+  file: [],
+  non_field: []
+})
 
 const filePreview = ref("");
 const isSubmittingForm = ref(false);
 
 const createPractice = async () => {
   try {
+    // Reset errors before submission
+    errors = {
+      name: [],
+      iterations: [],
+      frequency: [],
+      goal: [],
+      file: [],
+      non_field: []
+    };
     isSubmittingForm.value = true;
-    // This would normally save the form data
-    await new Promise((resolve) => setTimeout(resolve, 2000));
     // Submit form data to backend
     const formData = new FormData();
     formData.append("name", createReferenceForm.value.name);
@@ -443,15 +476,50 @@ const createPractice = async () => {
         "Content-Type": "multipart/form-data",
       },
     });
-    // console.log(res.status, res.data);
-    // console.log("Practice created:", createReferenceForm.value);
+
+    closeForm();
     showSetupForm.value = false;
     fetchReferences();
-  } finally {
+  } 
+  catch (error: any) {
+    console.error("Error creating practice:", error);
+    if(error.response?.data){
+      if(error.response?.data?.message)
+        errors.non_field = [error.response?.data?.message];
+      else{ 
+        errors = { ...errors, ...error.response.data };
+      }
+    } else {
+      errors.non_field = ["An unexpected error occurred. Please try again."];
+    }
+  }
+  finally {
     isSubmittingForm.value = false;
   }
 };
 
+// Reset form and errors when closing
+const closeForm = () => {
+  showSetupForm.value = false;
+
+  errors = {
+    name: [],
+    iterations: [],
+    frequency: [],
+    goal: [],
+    file: [],
+    non_field: []
+  };
+  createReferenceForm.value = {
+    name: "",
+    iterations: 1,
+    frequency: "daily",
+    goal: "",
+    file: null
+  };
+
+  filePreview.value = "";
+};
 const handleFileUpload = (e: Event) => {
   const input = e.target as HTMLInputElement;
   if (input.files && input.files[0]) {
