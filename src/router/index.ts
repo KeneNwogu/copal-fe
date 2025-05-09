@@ -6,11 +6,18 @@ import StreaksViews from '@/views/StreaksViews.vue';
 import CreateReferenceView from '@/views/references/CreateReferenceView.vue';
 import AuthView from '@/views/AuthView.vue';
 import AuthSuccess from '@/views/AuthSuccess.vue';
+import LandingPage from '@/views/LandingPage.vue';
 import { useUserStore } from '@/stores/userStore';
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    {
+      path: '/',
+      name: 'landing',
+      component: LandingPage,
+      meta: { requiresGuest: true }
+    }, 
     {
       path: '/auth',
       name: 'auth',
@@ -24,7 +31,7 @@ const router = createRouter({
       meta: { requiresGuest: true }
     },
     {
-      path: '/',
+      path: '/home',
       component: HomeView,
       meta: { requiresAuth: true }
     },
@@ -51,7 +58,7 @@ router.beforeEach((to, _, next) => {
 
   if (requiresAuth && !userStore.isAuthenticated) {
     next('/auth');
-  } else if (requiresGuest && userStore.isAuthenticated) {
+  } else if (requiresGuest && userStore.isAuthenticated && to.path !== '/') {
     next('/');
   } else {
     next();

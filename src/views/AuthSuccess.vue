@@ -66,7 +66,7 @@ onMounted(async () => {
     userStore.setUser(response.data);
     userStore.setToken(token);
 
-    router.push("/");
+    router.push("/home");
   } catch (error) {
     console.error("Authentication error:", error);
     // Redirect to login page on error

@@ -12,6 +12,14 @@ const isAuthRoute = computed(() => {
   return route.path === '/auth' || route.path === '/authSuccess';
 });
 
+const isLandingRoute = computed(() => {
+  return route.path === '/';
+});
+
+const canShowSidebar = computed(() => {
+  return !isAuthRoute.value && !isLandingRoute.value;
+});
+
 import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore();
 
@@ -45,9 +53,9 @@ import {
 <template>
   <div class="flex h-screen" style="width: 100vw">
     <SidebarProvider>
-      <AppSidebar v-if="!isAuthRoute" />
+      <AppSidebar v-if="canShowSidebar" />
       <main class="flex-1 overflow-y-auto">
-        <SidebarTrigger v-if="!isAuthRoute" />
+        <SidebarTrigger v-if="canShowSidebar" />
         <!-- Header -->
         <header class="bg-white border-b sticky top-0 z-10">
           <div

@@ -395,7 +395,7 @@ const handleSubmit = async () => {
       userStore.setUser(res.data.user);
       userStore.setToken(res.data.token);
 
-      router.push('/');
+      router.push('/home');
       isLoading.value = false;
     }
 
